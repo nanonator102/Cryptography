@@ -22,19 +22,5 @@ public class Main {
 
     }
 
-    public static int GCFEuclid(int x, int y) {
-        int a = Math.max(x, y);
-        int b = Math.min(x, y);
-        int c;
-        int r = 1;
-        while (r != 0) {
-            c = a / b;
-            r = a % b;
-            a = b;
-            b = c;
-        }
-        return a;
-    }
-
 
 }
