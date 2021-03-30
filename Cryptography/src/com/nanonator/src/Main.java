@@ -7,6 +7,12 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
+        rsaExample();
+        elGamalExample();
+    }
+
+    public static void rsaExample() {
+        System.out.println("=====RSA Example=====");
         BigInteger p = new BigInteger("97");
         BigInteger q = new BigInteger("101");
         RSA rsa = new RSA(p, q);
@@ -19,7 +25,21 @@ public class Main {
         BigInteger c1 = rsa.encrypt(new BigInteger("2"));
         BigInteger c2 = rsa.encrypt(new BigInteger("5"));
         System.out.println("2 * 5 = " + rsa.decrypt(rsa.multiply(c1, c2)));
+        System.out.println("=====End RSA Example=====\n\n");
+    }
 
+    public static void elGamalExample() {
+        System.out.println("=====ElGamal Example=====");
+        BigInteger eP = new BigInteger("139");
+        BigInteger eG = new BigInteger("3");
+        BigInteger eX = new BigInteger("12");
+        ElGamal elGamal = new ElGamal(eP, eG, eX);
+        System.out.println(elGamal.toString());
+        BigInteger[] eC = elGamal.encrypt(new BigInteger("100"), new BigInteger("52"));
+        System.out.println("Cryptotext(M) = " + eC[0].toString() + ", " + eC[1].toString());
+        BigInteger m = elGamal.decrypt(eC);
+        System.out.println("Message(C) = " + m.toString());
+        System.out.println("=====End ElGamal Example=====\n\n");
     }
 
 
