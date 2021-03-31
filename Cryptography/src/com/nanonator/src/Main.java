@@ -25,6 +25,9 @@ public class Main {
         BigInteger c1 = rsa.encrypt(new BigInteger("2"));
         BigInteger c2 = rsa.encrypt(new BigInteger("5"));
         System.out.println("2 * 5 = " + rsa.decrypt(rsa.multiply(c1, c2)));
+        System.out.print("\n\n\n");
+        RSA rsa2 = new RSA(new BigInteger("551"), new BigInteger("59"), new BigInteger("299"));
+
         System.out.println("=====End RSA Example=====\n\n");
     }
 

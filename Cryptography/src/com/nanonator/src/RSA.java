@@ -19,6 +19,15 @@ public class RSA {
         this.d = e.modInverse(phiN);
     }
 
+
+    //Constructor for giving the public and private keys. Can also be used for just the public keys if d is BigInteger.ZERO
+    public RSA(BigInteger n, BigInteger e, BigInteger d) {
+        this.n = n;
+        this.e = e;
+        this.d = d;
+        this.phiN = BigInteger.ZERO;
+    }
+
     //Returns the public keys as an array of BigInteger with a length of 2.
     public BigInteger[] getPublicKey() {
         return new BigInteger[]{n, e};
@@ -34,9 +43,13 @@ public class RSA {
         return m.modPow(e, n);
     }
 
-    //Decrypt the cryptotext, c and return the message.
+    //Decrypt the cryptotext, c and return the message. if D is 0 then this will return 0.
     public BigInteger decrypt(BigInteger c) {
-        return c.modPow(d, n);
+        if (d.equals(BigInteger.ZERO)) {
+            return d;
+        } else {
+            return c.modPow(d, n);
+        }
     }
 
     //Multiply two cryptotexts and return the result.
