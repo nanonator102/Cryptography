@@ -42,6 +42,9 @@ public class Main {
         System.out.println("Cryptotext(M) = " + eC[0].toString() + ", " + eC[1].toString());
         BigInteger m = elGamal.decrypt(eC);
         System.out.println("Message(C) = " + m.toString());
+        System.out.print("\n\n\n");
+
+        ElGamal elGamal1 = new ElGamal(new BigInteger("139"), new BigInteger("3"), new BigInteger("44"), new BigInteger("12"));
         System.out.println("=====End ElGamal Example=====\n\n");
     }
 

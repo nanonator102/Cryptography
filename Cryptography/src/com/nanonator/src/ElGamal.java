@@ -3,7 +3,7 @@ package com.nanonator.src;
 import java.math.BigInteger;
 
 public class ElGamal {
-    private final BigInteger p, g, x, y;
+    private final BigInteger p, g, y, x;
 
     public ElGamal(BigInteger p, BigInteger g, BigInteger x) {
         //p, g and x are provided by the user. p is a prime number where g and x are random numbers.
@@ -14,10 +14,18 @@ public class ElGamal {
         this.y = g.modPow(x, p);
     }
 
+    //Constructor to initialise ElGamal using the public and private keys. x can be set to BigInteger.ZERO for encryption only.
+    public ElGamal(BigInteger p, BigInteger g, BigInteger y, BigInteger x) {
+        this.p = p;
+        this.g = g;
+        this.y = y;
+        this.x = x;
+    }
 
-    //Returns the public keys as an array. Order is y, g, p.
+
+    //Returns the public keys as an array. Order is p, g, y.
     public BigInteger[] getPublicKeys() {
-        return new BigInteger[]{y, g, p};
+        return new BigInteger[]{p, g, y};
     }
 
     //Returns the private key, x
