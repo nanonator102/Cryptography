@@ -46,6 +46,16 @@ public class Main {
 
         ElGamal elGamal1 = new ElGamal(new BigInteger("139"), new BigInteger("3"), new BigInteger("44"), new BigInteger("12"));
         System.out.println("=====End ElGamal Example=====\n\n");
+
+        ElGamal elGamal2 = new ElGamal(new BigInteger("2879"), new BigInteger("2585"), new BigInteger("47"));
+        System.out.println(elGamal2.toString());
+        BigInteger[] eC1 = elGamal2.encrypt(new BigInteger("5"), new BigInteger("154"));
+        BigInteger[] eC2 = elGamal2.encrypt(new BigInteger("6"), new BigInteger("96"));
+        System.out.printf("C1: %s, %s\nC2: %s, %s\n", eC1[0].toString(), eC1[1].toString(), eC2[0].toString(), eC2[1].toString());
+        BigInteger[] cmult = elGamal2.multiply(eC1, eC2);
+        System.out.printf("CMult: %s, %s\n", cmult[0].toString(), cmult[1].toString());
+        BigInteger mult = elGamal2.decryptMultiplication(cmult);
+        System.out.printf("Mult result: %s\n", mult.toString());
     }
 
 

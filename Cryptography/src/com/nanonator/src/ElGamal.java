@@ -36,7 +36,6 @@ public class ElGamal {
     //Takes a plaintext message and returns a pair of cryptotext.
     public BigInteger[] encrypt(BigInteger m, BigInteger r) {
         BigInteger k = y.modPow(r, p);
-        System.out.println("K = " + k.toString());
         BigInteger[] cryptos = new BigInteger[2];
         cryptos[0] = g.modPow(r, p);
         cryptos[1] = m.multiply(k).mod(p);
@@ -57,6 +56,12 @@ public class ElGamal {
      c[0] = C1[0].multiply(C2[0]).mod(p);
      c[1] = C1[1].multiply(C2[1]).mod(p);
      return c;
+    }
+
+    public BigInteger decryptMultiplication(BigInteger[] cryptotext) {
+        BigInteger a1 = cryptotext[1].mod(p);
+        BigInteger a2 = (cryptotext[0].pow(x.intValue())).modInverse(p);
+        return a1.multiply(a2).mod(p);
     }
 
     public String toString() {
