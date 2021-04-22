@@ -62,4 +62,16 @@ public class RSA {
         return String.format("N = %s, phiN = %s, E = %s, D = %s", n.toString(), phiN.toString(), e.toString(), d.toString());
     }
 
+    public BigInteger genSignature(BigInteger m) {
+        BigInteger s;
+        s = m.modPow(d, n);
+        return s;
+    }
+
+    public boolean checkSignature(BigInteger m, BigInteger s) {
+        BigInteger i;
+        i = s.modPow(e, n);
+        return i.equals(s);
+    }
+
 }
