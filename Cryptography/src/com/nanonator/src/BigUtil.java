@@ -27,4 +27,26 @@ public class BigUtil {
         }
         return start;
     }
+
+    public static BigInteger lcm(BigInteger a, BigInteger b) {
+        return (a.multiply(b)).divide(gcd(a, b));
+    }
+
+    public static BigInteger gcd(BigInteger a, BigInteger b) {
+        while (!b.equals(BigInteger.ZERO)) {
+            BigInteger t = b;
+            b = a.remainder(b);
+            a = t;
+        }
+        return a;
+    }
+
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
+    }
 }
