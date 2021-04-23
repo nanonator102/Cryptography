@@ -40,11 +40,12 @@ public class Paillier {
         BigInteger bigL;
         bigL = c.modPow(l, (n.pow(2)));
         bigL = (bigL.subtract(BigInteger.ONE)).divide(n);
-        BigInteger m = (bigL.multiply(u)).mod(n);
-        return m;
+        return (bigL.multiply(u)).mod(n);
     }
 
-    //TODO Add paillier addition.
+    public BigInteger add(BigInteger c1, BigInteger c2) {
+        return c1.multiply(c2);
+    }
 
     public String toString() {
         return String.format("P = %s\nQ = %s\nG = %s\nN = %s\nL = %s\nK = %s\nU = %s", p, q, g, n, l, k, u);
