@@ -35,4 +35,13 @@ public class PaillierTest {
         BigInteger c = new BigInteger("1366");
         assertEquals(new BigInteger("100"), paillier.decrypt(c));
     }
+
+    @Test
+    public void add() {
+        Paillier paillierAdd = new Paillier(new BigInteger("5"), new BigInteger("7"), new BigInteger("164"));
+        BigInteger c1 = paillierAdd.encrypt(new BigInteger("4"), new BigInteger("6"));
+        BigInteger c2 = paillierAdd.encrypt(new BigInteger("1"), new BigInteger("17"));
+        BigInteger c = paillierAdd.add(c1, c2);
+        assertEquals(new BigInteger("5"), paillierAdd.decrypt(c));
+    }
 }
