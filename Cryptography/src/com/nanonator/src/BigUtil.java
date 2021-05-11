@@ -41,12 +41,13 @@ public class BigUtil {
         return a;
     }
 
-    public static int gcd(int a, int b) {
-        while (b != 0) {
-            int t = b;
-            b = a % b;
-            a = t;
+    public static BigInteger modinv(BigInteger a, BigInteger e, BigInteger m) {
+        BigInteger r;
+        try {
+            r = a.modInverse(e);
+        } catch (ArithmeticException exception) {
+            r = a.multiply(e);
         }
-        return a;
+        return r.mod(m);
     }
 }

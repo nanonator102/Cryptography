@@ -67,4 +67,12 @@ public class ElGamal {
     public String toString() {
         return String.format("P = %s, G = %s, X = %s, Y = %s", p.toString(), g.toString(), x.toString(), y.toString());
     }
+
+    //TODO Finish implementation.
+    public BigInteger[] genSignature(BigInteger m, BigInteger k) {
+        BigInteger r;
+        r = g.modPow(k, p);
+        BigInteger s;
+        return null;
+    }
 }
