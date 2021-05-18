@@ -105,7 +105,7 @@ public class ElGamal {
 
     /**
      * Returns the public and private keys as a string.
-     * @return = keys
+     * @return = String of keys {p, g, x, y}
      */
     public String toString() {
         return String.format("P = %s, G = %s, X = %s, Y = %s", p.toString(), g.toString(), x.toString(), y.toString());
@@ -115,11 +115,10 @@ public class ElGamal {
      * Generates a signature for the given message.
      * @param m = Message
      * @param k = Nonce
-     * @return
+     * @return = Signature[]{r, s}
      */
     public BigInteger[] genSignature(BigInteger m, BigInteger k) {
-        BigInteger r;
-        r = g.modPow(k, p);
+        BigInteger r = g.modPow(k, p);
         BigInteger t = m.subtract(x.multiply(r));
         BigInteger s = BigUtil.modinv(k, p.subtract(BigInteger.ONE));
         s = s.multiply(t);
@@ -131,7 +130,7 @@ public class ElGamal {
      * Verifies the signature s of given message m. Returns true if signature matches.
      * @param m = Message
      * @param s = Signature[]{r, s}
-     * @return
+     * @return = true/false
      */
     public boolean verifySignature(BigInteger m, BigInteger[] s) {
         BigInteger v = g.modPow(m, p);
