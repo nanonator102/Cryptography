@@ -4,7 +4,11 @@ import java.math.BigInteger;
 
 public class BigUtil {
 
-    // Checks if a number is prime. Returns true if it is prime.
+    /**
+     * Checks if a number is prime. Returns true if prime.
+     * @param a = BigInteger testNumber
+     * @return = boolean isPrime
+     */
     public static boolean isPrime(BigInteger a) {
         boolean isPrime = true;
         for (BigInteger i = new BigInteger("2"); !i.equals(a.divide(BigInteger.TWO)); i = i.add(BigInteger.ONE)) {
@@ -16,7 +20,11 @@ public class BigUtil {
         return isPrime;
     }
 
-    // Finds the next prime from the given number.
+    /**
+     * Finds the next prime from the given number.
+     * @param start = BigInteger startingValue
+     * @return = BigInteger prime
+     */
     public static BigInteger findNextPrime(BigInteger start) {
         if (isPrime(start)) {
             return start;
@@ -28,10 +36,12 @@ public class BigUtil {
         return start;
     }
 
-    public static BigInteger lcm(BigInteger a, BigInteger b) {
-        return (a.multiply(b)).divide(gcd(a, b));
-    }
-
+    /**
+     * Returns the GCD of two numbers.
+     * @param a = BigInteger a
+     * @param b = BigInteger b
+     * @return = BigInteger GCD(a,b)
+     */
     public static BigInteger gcd(BigInteger a, BigInteger b) {
         while (!b.equals(BigInteger.ZERO)) {
             BigInteger t = b;
@@ -41,6 +51,22 @@ public class BigUtil {
         return a;
     }
 
+    /**
+     * Returns the LCM of two numbers.
+     * @param a = BigInteger a
+     * @param b = BigInteger b
+     * @return = BigInteger LCM(a,b)
+     */
+    public static BigInteger lcm(BigInteger a, BigInteger b) {
+        return (a.multiply(b)).divide(gcd(a, b));
+    }
+
+    /**
+     * Returns the modular inverse of a^-1 mod e. Uses inbuilt method for positive numbers and multiplication method for negative numbers.
+     * @param a = BigInteger a
+     * @param e = BigInteger e
+     * @return = BigInteger modInv
+     */
     public static BigInteger modinv(BigInteger a, BigInteger e) {
         BigInteger r;
         try {
