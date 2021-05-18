@@ -5,44 +5,9 @@ import java.math.BigInteger;
 public class Main {
 
     public static void main(String[] args) {
-        //rsaExample();
-        //elGamalExample();
-        //paillierExample();
-
-        BigInteger p = new BigInteger("191447");
-        BigInteger g = new BigInteger("425");
-        BigInteger x = new BigInteger("1998");
-
-
-
-        ElGamal elGamal = new ElGamal(p, g, x);
-        System.out.println(elGamal.toString());
-
-        BigInteger m = new BigInteger("2300");
-        BigInteger k = new BigInteger("2813");
-
-        BigInteger[] s = elGamal.genSignature(m, k);
-        if (elGamal.verifySignature(m, s)) {
-            System.out.println("Verified!");
-        }
-
-        /*BigInteger p = new BigInteger("97");
-        BigInteger q = new BigInteger("101");
-        RSA rsa = new RSA(p, q);
-        System.out.println(rsa.toString());
-
-        BigInteger m1 = new BigInteger("23");
-        BigInteger m2 = new BigInteger("2");
-
-        BigInteger c1 = rsa.encrypt(m1);
-        BigInteger c2 = rsa.encrypt(m2);
-        BigInteger c3 = rsa.multiply(c1, c2);
-        System.out.printf("C1: %s\nC2: %s\nC3: %s\n", c1, c2, c3);
-        BigInteger m3 = rsa.decrypt(c3);
-        System.out.println("M3: " + m3);
-        BigInteger s1 = rsa.genSignature(c3);
-        System.out.println("S1: " + s1);
-        System.out.println("S1 encrypted: " + rsa.encrypt(s1));*/
+        rsaExample();
+        elGamalExample();
+        paillierExample();
     }
 
     public static void paillierExample() {
