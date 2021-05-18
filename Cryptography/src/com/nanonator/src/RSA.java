@@ -3,47 +3,69 @@ package com.nanonator.src;
 import java.math.BigInteger;
 
 public class RSA {
-    private final BigInteger n, phiN, d, e;
+    private final BigInteger n, d, e;
 
-
-    //Constructor to generate the public and private keys when given 2 prime numbers. Primality is not enforced here but is required.
-    public RSA(BigInteger p, BigInteger q) {
-        //Calculate n and phiN
+    /**
+     * Constructor to generate an RSA keypair. Values p and q must be prime numbers. e can be preset or set to BigInteger.ZERO to be automatically generated.
+     * @param p = prime 1
+     * @param q = prime 2
+     * @param e = coprime to phi(n)
+     */
+    public RSA(BigInteger p, BigInteger q, BigInteger e) {
         this.n = p.multiply(q);
-        System.out.println("n = " + n.toString());
-        this.phiN = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE)));
+        BigInteger phiN = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE)));
 
-        //Generates the value e by diving phiN by 3 and finding the next prime from that value. Probably not the most secure but allows generating of e automatically with very little effort.
-        this.e = BigUtil.findNextPrime(phiN.divide(new BigInteger("3")));
+        if(e.equals(BigInteger.ZERO)) {
+            //Automatically generates a value for e if none is given. Guaranteed to work as primes are always co-prime to other numbers.
+            this.e = BigUtil.findNextPrime(phiN.divide(new BigInteger("3")));
+        } else {
+            this.e = e;
+        }
 
         this.d = e.modInverse(phiN);
     }
 
-
-    //Constructor for giving the public and private keys. Can also be used for just the public keys if d is BigInteger.ZERO
-    public RSA(BigInteger n, BigInteger e, BigInteger d) {
-        this.n = n;
-        this.e = e;
-        this.d = d;
-        this.phiN = BigInteger.ZERO;
+    /**
+     * Constructor to initialize an RSA keypair using a given public key set and given private key. Private key can be BigInteger.ZERO for encryption/signature verification only.
+     * @param publicKey = BigInteger[]{n, e}
+     * @param privateKey = BigInteger d
+     */
+    public RSA(BigInteger[] publicKey, BigInteger privateKey) {
+        this.n = publicKey[0];
+        this.e = publicKey[1];
+        this.d = privateKey;
     }
 
-    //Returns the public keys as an array of BigInteger with a length of 2.
+    /**
+     * Returns the public key as an array of BigInteger.
+     * @return = BigInteger[]{n, e}
+     */
     public BigInteger[] getPublicKey() {
         return new BigInteger[]{n, e};
     }
 
-    //Should not actually be public
+    /**
+     * Returns the private key as a BigInteger.
+     * @return = BigInteger d
+     */
     public BigInteger getPrivateKey() {
         return d;
     }
 
-    //Encrypt the message, m and return the cryptotext.
+    /**
+     * Encrypts the given message and returns the ciphertext.
+     * @param m = BigInteger message
+     * @return = BigInteger ciphertext
+     */
     public BigInteger encrypt(BigInteger m) {
         return m.modPow(e, n);
     }
 
-    //Decrypt the cryptotext, c and return the message. if D is 0 then this will return 0.
+    /**
+     * Decrypts the given ciphertext and returns the cleartext. If the private key is BigInteger.ZERO this will return BigInteger.ZERO
+     * @param c = BigInteger ciphertext
+     * @return = BigInteger cleartext
+     */
     public BigInteger decrypt(BigInteger c) {
         if (d.equals(BigInteger.ZERO)) {
             return d;
@@ -52,26 +74,43 @@ public class RSA {
         }
     }
 
-    //Multiply two cryptotexts and return the result.
+    /**
+     * Multiplies two ciphertexts and returns the resulting ciphertext.
+     * @param c1 = BigInteger ciphertext1
+     * @param c2 = BigInteger ciphertext2
+     * @return = BigInteger ciphertext3
+     */
     public BigInteger multiply(BigInteger c1, BigInteger c2) {
         return c1.multiply(c2);
     }
 
-    //Return a string containing all variables. Not really useful except for printing to the console for testing purposes.
+    /**
+     * Gives a string containing the public and private keys.
+     * @return = String keys
+     */
     public String toString() {
-        return String.format("N = %s, phiN = %s, E = %s, D = %s", n.toString(), phiN.toString(), e.toString(), d.toString());
+        return String.format("N = %s, E = %s, D = %s", n.toString(), e.toString(), d.toString());
     }
 
+    /**
+     * Generates and returns an RSA signature of the given message.
+     * @param m = BigInteger message
+     * @return = BigInteger signature
+     */
     public BigInteger genSignature(BigInteger m) {
         BigInteger s;
         s = m.modPow(d, n);
         return s;
     }
 
+    /**
+     * Checks the given signature against the given message. Returns true if signature matches.
+     * @param m = BigInteger message
+     * @param s = BigInteger signature
+     * @return = boolean match
+     */
     public boolean checkSignature(BigInteger m, BigInteger s) {
-        BigInteger i;
-        i = s.modPow(e, n);
-        return i.equals(s);
+        return decrypt(s).equals(m);
     }
 
 }

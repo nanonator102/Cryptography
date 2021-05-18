@@ -8,7 +8,7 @@ import java.math.BigInteger;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RSATest {
-    RSA rsa = new RSA(new BigInteger("2381"), new BigInteger("5107"));
+    RSA rsa = new RSA(new BigInteger("2381"), new BigInteger("5107"), BigInteger.ZERO);
     /*
     Using p = 2381 and q = 5107 the expected results are as follows:
 

@@ -41,13 +41,16 @@ public class BigUtil {
         return a;
     }
 
-    public static BigInteger modinv(BigInteger a, BigInteger e, BigInteger m) {
+    public static BigInteger modinv(BigInteger a, BigInteger e) {
         BigInteger r;
         try {
             r = a.modInverse(e);
+            return r;
         } catch (ArithmeticException exception) {
+            System.out.printf("Caught exception. A = %s, E = %s\n", a, e);
             r = a.multiply(e);
+            System.out.printf("Temp = %s\n", r);
+            return r;
         }
-        return r.mod(m);
     }
 }
