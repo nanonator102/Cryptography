@@ -1,25 +1,41 @@
 package com.nanonator.src;
 
 import java.math.BigInteger;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class RSA {
-    private final BigInteger n, d, e;
+    private final BigInteger n, d;
+    private BigInteger e;
 
     /**
      * Constructor to generate an RSA keypair. Values p and q must be prime numbers. e can be preset or set to BigInteger.ZERO to be automatically generated.
      * @param p = prime 1
      * @param q = prime 2
-     * @param e = coprime to phi(n)
      */
-    public RSA(BigInteger p, BigInteger q, BigInteger e) {
+    public RSA(BigInteger p, BigInteger q) {
         this.n = p.multiply(q);
         BigInteger phiN = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE)));
 
-        if(e.equals(BigInteger.ZERO)) {
-            //Automatically generates a value for e if none is given. Guaranteed to work as primes are always co-prime to other numbers.
-            this.e = BigUtil.findNextPrime(phiN.divide(new BigInteger("3")));
-        } else {
-            this.e = e;
+        this.e = phiN.divide(new BigInteger("3"));
+        while (!BigUtil.gcd(this.e, phiN).equals(BigInteger.ONE)) {
+            this.e = this.e.add(BigInteger.ONE);
+        }
+
+        Scanner scan = new Scanner(System.in);
+        BigInteger input;
+        System.out.printf("E value required. Suggested value is %s. Please enter a value.\n", this.e);
+        try {
+            input = scan.nextBigInteger();
+            BigInteger oldE = this.e;
+            this.e = input;
+            if (!BigUtil.gcd(this.e, phiN).equals(BigInteger.ONE)) {
+                System.out.printf("Input E value is not Co-Prime to PhiN (%s). Using %s as E value.\n", phiN, oldE);
+                this.e = oldE;
+            }
+        } catch (InputMismatchException exception) {
+            scan.reset();
+            System.out.printf("Input could not be parsed. Using %s for E.\n", this.e);
         }
 
         this.d = e.modInverse(phiN);
