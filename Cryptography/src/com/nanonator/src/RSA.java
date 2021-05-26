@@ -17,10 +17,7 @@ public class RSA {
         this.n = p.multiply(q);
         BigInteger phiN = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE)));
 
-        this.e = phiN.divide(new BigInteger("3"));
-        while (!BigUtil.gcd(this.e, phiN).equals(BigInteger.ONE)) {
-            this.e = this.e.add(BigInteger.ONE);
-        }
+        this.e = new BigInteger("65537");
 
         Scanner scan = new Scanner(System.in);
         BigInteger input;
