@@ -28,7 +28,7 @@ public class Main {
         System.out.println("=====RSA Example=====");
         BigInteger p = new BigInteger("97");
         BigInteger q = new BigInteger("101");
-        RSA rsa = new RSA(p, q, BigInteger.ZERO);
+        RSA rsa = new RSA(p, q);
         BigInteger c = rsa.encrypt(new BigInteger("100"));
         BigInteger mm = rsa.decrypt(c);
         System.out.printf("C = %d, M = %d\n", c, mm);
