@@ -1,8 +1,5 @@
 # Cryptography
 A java project containing various cryptography methods.
+PLEASE NOTE: These implementations are NOT cryptographically secure and are provided purely for educational purposes. If you need cryptography, USE A PROPER LIBRARY!
 
 Created by Zach Moroney.
-
-You can contact me on:
-Discord: nanonator102#1542
-Email: thenanonator102@gmail.com
